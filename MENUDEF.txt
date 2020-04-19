@@ -835,96 +835,206 @@ OptionValue "maxgibs"
 AddOptionMenu "OptionsMenu"
 {
 	StaticText ""
-	Submenu "Project Brutality - ZMove Options", "ZMoveOptions"
+	Submenu "ZMove Options", "ZMoveOptions"
 }
 
 OptionMenu "ZMoveOptions"
 {
 	Class "ZMoveMenu"
-	Title "Project Brutality - ZMove Options"
+	Title "ZMove Options"
 	Position -32
 	
 	StaticText	""
 	StaticText	"Speed & Acceleration", 1
-	ZMoveOption	"Acceleration Type",					"Pick your acceleration type",															"sv_acceltype",				"AccelType"
-	ZMoveSlider	"Top Running Speed",					"Increase value to increase the top running speed",										"sv_uspeedmodifier",		0,		4,		0.1
-	ZMoveSlider "Top Hopping Speed", 					"Top Hopping Speed (u/s)",																"sv_topspeedlimiter",		20,		36,		1,		0
-	ZMoveSlider	"Walk Speed",							"How fast you move when walking (% of regular speed)",									"sv_walkspeed",				0.5,	1.0,	0.1
-	ZMoveSlider	"Crouch Speed",							"How fast you move when crouching (% of regular speed, never faster than Walk Speed)",	"sv_crouchspeed",			0.1,	1.0,	0.1
-	ZMoveSlider "Gravity", 								"Set Player Gravity",																	"sv_setgravity",			0.1,	1.5,	0.1,	2
+	ZMoveOption	"Movement Type",						"Pick your Movement Type",																"zm_movetype",				"MoveType"
+	ZMoveSlider "Ground Friction Strength", 			"Set Ground Friction Strength",															"zm_friction",				0.5,	10.0,	0.1
+	ZMoveSlider	"Maximum Ground Speed",					"Maximum Ground Speed (u/s)",															"zm_maxgroundspeed",		10,		15,		0.1
+	ZMoveSlider "Maximum Hopping Speed", 				"Maximum Hopping Speed (u/s)",															"zm_maxhopspeed",			24,		36,		1,		0
+	ZMoveSlider	"Walk Speed",							"How fast you move when walking (% of regular speed)",									"zm_walkspeed",				0.5,	1.0,	0.1
+	ZMoveSlider	"Crouch Speed",							"How fast you move when crouching (% of regular speed, never faster than Walk Speed)",	"zm_crouchspeed",			0.1,	1.0,	0.1
+	ZMoveSlider "StrafeRunning Speed Bonus",			"Ground Straferunning speed boost",														"zm_strafemodifier",		1.0,	1.2,	0.05,	2
+	ZMoveOption	"Drop Prevention",						"Helps not fall ledges when you are walking/not pressing directional inputs",			"zm_dropprevention",		"OnOff"
 	StaticText	""
-	StaticText	"Dusk Acceleration", Orange
-	ZMoveSlider "Ground Strafing Bonus",				"Ground Straferunning speed boost",														"dsk_strafemodifier",		-10,	5,		1
-	ZMoveSlider "Strafejumping Acceleration", 			"How fast you gain speed when you strafejump",											"dsk_acceleration",			0,		10,		1
-	ZMoveSlider "Escape Speed",							"The minimum speed at which the user set speed bonus kicks in",							"dsk_escapespeed",			18,		26,		1
-	ZMoveSlider "High Speed Acceleration Bonus", 		"Acceleration Bonus for when you go faster than the escape speed",						"dsk_accelbonus",			1,		2,		0.1
+	StaticText	"Dusk Movement", Orange
+	ZMoveSlider "Strafejumping Acceleration", 			"How fast you gain speed when you strafejump",											"dsk_acceleration",			1.0,	2.5,	0.1
 	StaticText	""
-	StaticText	"Painkiller Acceleration", Orange
-	ZMoveSlider "BHop Acceleration", 					"How fast you gain speed when bunnyhopping",											"pk_acceleration",			0.0,	2.0,	0.05,	2
+	StaticText	"Painkiller Movement", Orange
+	ZMoveSlider "BHop Acceleration", 					"How fast you gain speed when bunnyhopping",											"pk_acceleration",			1.0,	2.0,	0.05,	2
+	StaticText	""
+	StaticText	"Quake Movement", Orange
+	ZMoveOption	"Strafe Jumping Type",					"Pick your Strafe Jumping Type",														"q_strafetype",				"StrafeType"
+	ZMoveSlider "Q3 Acceleration", 						"How fast you gain speed when strafejumping Q3 style",									"q_3airaccel",				0.5,	1.0,	0.05,	2
+	ZMoveSlider "Q1 Acceleration", 						"How fast you gain speed when strafejumping Q1 style",									"q_1airaccel",				1.0,	2.0,	0.05,	2
 	StaticText	""
 	
 	StaticText	"Jumping", 1
-	ZMoveSlider "Jump Height", 							"Player Jump Height",																	"sv_jumpheight",			5,		8,		0.5
-	ZMoveSlider "BHop Jump Height (PK Only)", 			"Bunny Hop Jump Height (% of regular jump height)",										"pk_bhopjumpheight",		0.5,	1,		0.1,	2
-	ZMoveOption "Auto Jump", 							"When off you will not be able to jump a second time if you are holding the jump key",	"sv_autojump",				"OnOff"
+	ZMoveSlider "Jump Height", 							"Player Jump Height",																	"zm_jumpheight",			5,		8,		0.5
+	ZMoveSlider "Gravity", 								"Set Player Gravity",																	"zm_setgravity",			0.1,	1.5,	0.1,	2
+	ZMoveOption "Auto Jump", 							"Enable auto jump",																		"zm_autojump",				"OnOff"
+	StaticText	""
+	StaticText	"Build Engine Movement", Orange
+	ZMoveSlider "Jump Animation ViewHeight", 			"How much your viewpoint lowers when executing a jump",									"be_jumpanim",				4.0,	8.0,	0.5
+	StaticText	""
+	StaticText	"Painkiller Movement", Orange
+	ZMoveSlider "BHop Jump Height", 					"Bunny Hop Jump Height (% of regular jump height)",										"pk_bhopjumpheight",		0.5,	1,		0.1,	2
 	StaticText	""
 	StaticText	"Double Jump", Orange
-	ZMoveOption "Double Jump Type", 					"Enable and choose Double Jumping style",												"sv_doublejump",			"DoubleJump"
-	ZMoveSlider "Double Jump Height", 					"Double Jump Height (% of regular jump height)",										"sv_doublejumpheight",		0.5,	1.5,	0.1
+	ZMoveOption "Double Jump Type", 					"Enable and choose Double Jumping style",												"zm_doublejump",			"DoubleJump"
+	ZMoveSlider "Double Jump Height", 					"Double Jump Height (% of regular jump height)",										"zm_doublejumpheight",		0.5,	1.5,	0.1
+	ZMoveOption "Wall Jump Renewal", 					"Grants double jump everytime you execute a consecutive wall jump",						"zm_wjdoublejumprenew",		"OnOff"
 	StaticText	""
 	StaticText	"Ramp Jumps", Orange
-	ZMoveOption "Ramp Jumps Enabled", 					"When on you will be able to perform ramp jumps",										"sv_rampjump",				"OnOff"
-	ZMoveSlider "Ramp Jumps Tic threshold", 			"The amount of jump tics after which ramp jumps are not possible to execute",			"sv_rjumptics",				1,		15,		1,		0
-	ZMoveSlider "Ramp Jumps Bonus Multiplier", 			"Multiplier of the ramp jump height bonus",												"sv_rjumpmultiplier",		1.0,	2.0,	0.05,	2
+	ZMoveOption "Ramp Jumps Enabled", 					"When on you will be able to perform ramp jumps",										"zm_rampjump",				"OnOff"
+	ZMoveSlider "Ramp Jump Multiplier", 				"How beneficial a ramp jump is to the overall jump height",								"zm_rjumpmulti",			0.5,	1.2,	0.1,	2
 	StaticText	""
 	StaticText	"Elevator Jumps", Orange
-	ZMoveOption "Elevator Jumps Enabled", 				"When on you can perform UT style elevator jumps",										"sv_elevatorjump",			"OnOff"
-	ZMoveSlider "Elevator Jumps Bonus Multiplier", 		"Multiplier of the elevator jump bonus",												"sv_ejumpmultiplier",		1.0,	2.0,	0.05,	2
+	ZMoveOption "Elevator Jumps Enabled", 				"When on you can perform UT style elevator jumps",										"zm_elevatorjump",			"OnOff"
+	ZMoveSlider "Elevator Jumps Bonus Multiplier", 		"Multiplier of the elevator jump bonus",												"zm_ejumpmultiplier",		1.0,	2.0,	0.05,	2
+	StaticText	""
+	StaticText	"Jump landing height animation", Orange
+	ZMoveOption	"Jump Landing Enabled",					"Enable Build style jump landing view height animation",								"zm_landing",				"OnOff"
+	ZMoveSlider	"Landing Velocity Sensitivity",			"How sensitive the height change is to the landing velocity",							"zm_landingsens",			4.0,	8.0,	0.1
+	ZMoveSlider	"Animation Speed",						"How quickly your viewheight returns to normal",										"zm_landingspeed",			0.25,	1.0,	0.05,	2
+	ZMoveSlider	"Minimum Height",						"The minimum viewheight you reach during a landing (% of regular view height)",			"zm_minlanding",			0.5,	0.75,	0.05,	2
 	StaticText	""
 	
 	StaticText	"Dashing", 1
-	ZMoveOption	"Dash Enabled",							"Enable Dashing",																		"sv_dashenable",			"OnOff"
-	Control		"Dash Bind",							"Dash"
-	ZMoveSlider "Dash Boost", 							"Set how fast you dash",																"sv_dashboost",				1.5,	2.5,	0.05,	2
-	ZMoveSlider "Dash Jump Height", 					"Set how high you jump when dashing (% of regular jump height)",						"sv_dashjump",				0.5,	1.0,	0.05,	2
-	ZMoveSlider "Dash Cooler", 							"How many game tics have to pass before you can execute a second dash",					"sv_dashcooler",			5,		18,		1,		0
+	Control		"Dash - Wall Jump Bind",				"Dash"
+	ZMoveOption	"Dash Enabled",							"Enable Dashing",																		"zm_dash",					"OnOff"
+	ZMoveOption	"Double Tap Dash",						"Enable Dashing double tapping trigger",												"zm_doubletap",				"OnOff"
+	ZMoveSlider "Max Double Tap Time", 					"Maximum double tapping time",															"zm_maxtaptime",			2,		20,		1,		0
+	ZMoveSlider "Dash Boost", 							"Set how fast you dash",																"zm_dashboost",				1.2,	1.5,	0.05,	2
+	ZMoveSlider "Dash Jump Height", 					"Set how high you jump when dashing (% of regular jump height)",						"zm_dashheight",			0.5,	1.0,	0.05,	2
+	StaticText	""
+	StaticText	"Wall Jumping", Orange
+	ZMoveOption	"Wall Jump Enabled",					"Enable Wall Jumping",																	"zm_wjump",					"OnOff"
+	ZMoveSlider "Wall Jump Boost", 						"Set how fast you walljump",															"zm_wjumpboost",			1.5,	2.0,	0.05,	2
+	ZMoveSlider "Consecutive Jumps Bonus", 				"Speed bonus per each consecutive wall jump",											"zm_multipledashes",		0.0,	2.0,	0.05,	2
+	ZMoveSlider "Wall Jump Height", 					"Set how high you jump when wall jumping (% of regular jump height)",					"zm_wjumpheight",			0.5,	1.0,	0.05,	2
+	StaticText	""
+	StaticText	"Air Dashing", Orange
+	ZMoveOption	"Air Dash Enabled",						"Enable Air Dashing",																	"zm_airdash",				"OnOff"
+	ZMoveSlider	"Air Dash Boost",						"How strong air dashing boost is",														"zm_adashboost",			5,		15,		1,		0
+	ZMoveSlider	"Air Dash Friction",					"How quickly you will loose speed after an air dash",									"zm_adashfriction",			0.5,	1.5,	0.05,	2
+	StaticText	""
+	
+	StaticText	"Wall Sliding", 1
+	Control		"Wall Slide Bind",						"WallSlide"
+	ZMoveOption	"Wall Slide Enabled",					"Enable Wall Sliding",																	"zm_wslide",				"OnOff"
+	ZMoveSlider "Wall Sliding Gravity", 				"Lower the value slower you will fall to the ground when wall sliding",					"zm_wslidevelz",			0.5,	1.0,	0.05,	2
 	StaticText	""
 	
 	StaticText	"CrouchSlide", 1
-	ZMoveOption "Crouch Slide", 						"Enable crouch sliding",																"sv_crouchslide",			"OnOff"
-	ZMoveSlider "Slide Speed Boost", 					"Set the initial crouch slide speed boost",												"sv_cslidestrength",		3.0,	4.0,	0.05,	2
-	ZMoveSlider "Slide Boost Fade", 					"How quickly the speed boost fades per game tic",										"sv_cslidefade",			0.1,	0.5,	0.05,	2
-	ZMoveSlider "Mid Air Slide Speed Penalty", 			"How quickly the speed boost fades away when continuing a slide in mid air",			"sv_cslideairpenalty",		0.5,	1.0,	0.05,	2
+	ZMoveOption "Crouch Slide", 						"Enable crouch sliding",																"zm_crouchslide",			"OnOff"
+	ZMoveOption "Crouch Slide Type", 					"Select crouch slide type",																"zm_cslidetype",			"SlideType"
 	StaticText	""
+	StaticText	"Regular Crouch Slide", Orange
+	ZMoveSlider "Slide Speed Boost", 					"Set the initial crouch slide speed boost",												"zm_cslidestrength",		1.5,	2.5,	0.05,	2
+	ZMoveSlider "Slide duration", 						"Maximum slide duration in tics",														"zm_cslideduration",		10,		15,		1,		0
+	StaticText	""
+	StaticText	"Quake Crouch Slide", Orange
+	ZMoveSlider "Slide Acceleration", 					"How strong the crouch slide acceleration is",											"zm_qslideaccel",			5.0,	7.0,	0.05,	2
+	ZMoveSlider "Slide duration", 						"Multiplier of the crouch slide duration",												"zm_qslideduration",		6,		10,		1,		0
 	StaticText	""
 	
-	Option "Disable Ledge Climbing",				"donotclimb", "OnOff"
-	StaticText "Disables ledge climbing feature"
-	StaticText " "
-	StaticText " "
+	StaticText	"Ledge Grabbing - Do NOT enable this if playing Project Brutality 3.0", 1
+	ZMoveOption "Ledge Grabbing Enabled", 				"Turn on and off ledge grabbing",														"zm_ledgegrab",				"OnOff"
+	StaticText	""
+	
+	StaticText	"Grappling Hook", 1
+	Control		"Grappling Hook Bind",					"GrapplingHook"
+	ZMoveOption "Grappling Hook Enabled", 				"Enable and choose grappling hook style",												"zm_hook",					"GHook"
+	ZMoveSlider "Hook speed boost", 					"Intensity of the hook's speed boost",													"zm_hookboost",				1.0,	2.0,	0.1
+	StaticText	""
+	
+	StaticText	"Bobbing", 1
+	ZMoveSlider	"Walk/Run View Bobbing",				"Adjust view bobbing's intensity when moving",											"movebob",					0.0,	1.0,	0.1
+	ZMoveSlider	"Still View Bobbing",					"Adjust view bobbing's intensity when not moving",										"stillbob",					0.0,	1.0,	0.1
+	ZMoveSlider	"Walk/Run Weapon Bobbing",				"Adjust weapon bobbing's intensity when moving",										"wbobspeed",				0.0,	2.0,	0.1
+	ZMoveOption	"Still Weapon Bobbing",					"Turn on/off the weapon bobbing when standing still",									"zm_stillbob",				"OnOff"
+	ZMoveSlider	"Sprite speed to full bob",				"How fast weapon sprites transition to their maximum bobbing range",					"zm_fullbobspeed",			1,		15,		1,		0
+	StaticText 	""
+	StaticText	"Weapon Sway", Orange
+	ZMoveOption "Yaw Weapon Sway", 						"Allow weapons to sway according to your mouse yaw",									"zm_yawsway",				"OnOff"
+	ZMoveSlider "Yaw Sway Speed", 						"How fast weapons sway",																"zm_yawswayspeed",			0,		4,		0.5
+	ZMoveSlider "Yaw Sway Range", 						"Maximum Distance weapons can sway",													"zm_yawswayrange",			0,		8,		0.1
+	ZMoveSlider "Yaw Sway Friction", 					"How fast sprites will tend to realign to the center",									"zm_yawswayfriction",		5,		14,		0.5
+	ZMoveOption "Yaw Sway Direction", 					"Set wherever weapons sway in the direction you turn or the opposite",					"zm_yawswaydirection",		"SwayDirection"
+	StaticText 	""
+	StaticText	"Vertical Offset", Orange
+	ZMoveSlider "Offset Speed", 						"How fast weapons raise and fall depending on your vertical velocity",					"zm_offsetspeed",			50,		100,	1,		0
+	ZMoveSlider "Offset Range", 						"Maximum Height weapons can fall",														"zm_offsetmaxrange",		10,		50,		1,		0
+	ZMoveOption "Offset Direction", 					"Set Wherever the sprites are offset according to your vertical direction",				"zm_offsetdirection",		"OffsetDirection"
+	StaticText 	""
 	
 	StaticText	"Others", 1
-	ZMoveOption "Speedometer", 							"Enable SpeedOMeter",																	"cl_speedometer",			"OnOff"
+	ZMoveOption "Speedometer", 							"Enable SpeedOMeter",																	"zm_speedometer",			"Speedometer"
 	Control		"Reset to default values",				"zmove_reset"
 }
 
-OptionValue "AccelType"
+OptionValue "MoveType"
 {
-	0, "Dusk"
-	1, "Painkiller"
+	0, "Doom"
+	1, "Build Engine"
+	2, "Dusk"
+	3, "Painkiller"
+	4, "Quake"
+	5, "Unreal Tournament"
+}
+
+OptionValue "StrafeType"
+{
+	0, "Quake 3"
+	1, "Quake 1"
+	2, "CPMA"
 }
 
 OptionValue "DoubleJump"
 {
 	0, "Off"
-	1, "UT2004"
+	1, "Unreal Tournament"
 	2, "Doom 4"
+}
+
+OptionValue "SlideType"
+{
+	0, "Regular"
+	1, "Quake"
+}
+
+OptionValue "BobType"
+{
+	0, "Doom"
+	1, "Build Engine"
+	2, "Dusk"
+	3, "Painkiller"
+	4, "Unreal Tournament"
+}
+
+OptionValue "GHook"
+{
+	0, "Off"
+	1, "Pull Only"
+	2, "Pull & Pendulum"
 }
 
 OptionValue "SwayDirection"
 {
 	0, "Opposite Direction"
 	1, "Same Direction"
+}
+
+OptionValue "OffsetDirection"
+{
+	0, "Opposite Direction"
+	1, "Same Direction"
+}
+
+OptionValue "Speedometer"
+{
+	0, "Off"
+	1, "Doom Units"
+	2, "Quake Units"
 }
 
 
@@ -960,7 +1070,8 @@ OptionMenu "NashGoreMenu"
 
 	StaticText "$NASHGOREMNU_MISC_TITLE", 1
 	SafeCommand "$NASHGOREMNU_MISC_CLEARGORENOW",			"netevent EV_ClearGore"
-	NashGoreSlider "$NASHGOREMNU_MISC_MAXGORE",				"$NASHGOREMNU_HELPTEXT_MISC_MAXGORE",		"nashgore_maxgore",		0, 500, 1, 0
+	NashGoreSlider "$NASHGOREMNU_MISC_MAXGORE",				"$NASHGOREMNU_HELPTEXT_MISC_MAXGORE",		"nashgore_maxgore",		0, 2000, 1, 0
+	NashGoreSlider "$NASHGOREMNU_MISC_MAXCASINGS",			"$NASHGOREMNU_HELPTEXT_MISC_MAXCASINGS",	"nashgore_maxcasings",	0, 2000, 1, 0
 	NashGoreOption "$NASHGOREMNU_MISC_CORPSEBLOOD",			"$NASHGOREMNU_HELPTEXT_MISC_CORPSEBLOOD",	"nashgore_corpseblood",	"OnOff"
 	NashGoreOption "$NASHGOREMNU_MISC_FOOTPRINTS",			"$NASHGOREMNU_HELPTEXT_MISC_FOOTPRINTS",	"nashgore_footprints",	"OnOff"
 	NashGoreOption "$NASHGOREMNU_MISC_DEATHFLIP",			"$NASHGOREMNU_HELPTEXT_MISC_DEATHFLIP",		"nashgore_deathflip",	"OnOff"
