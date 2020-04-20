@@ -22,13 +22,6 @@ OptionMenu "OptionsMenu"
 	Command "Go to console",			"menuconsole"
 }
 
-AddOptionMenu "OptionsMenu"
-{
-	StaticText ""
-	StaticText "Tilt++ v1.65"
-	Submenu "$OPTMNU_TILTPLUSPLUS", "TiltPlusPlusMenu"
-}
-
 OptionMenu "TiltPlusPlusMenu"
 {
 	Class "TiltPlusPlusMenu"
@@ -104,7 +97,7 @@ OptionMenu "BDSettings"
 	StaticText " "
 	Submenu "Weapon Settings",		"WeaponSettings"
 	StaticText " "
-	Submenu "Rendering Settings",		"RenderingSettings"
+	Submenu "Visual Settings",		"RenderingSettings"
 	StaticText " "
 	
 }
@@ -133,7 +126,7 @@ OptionMenu "SpawnPresets"
 {
 	Title "--------- Global Settings ---------"
 	StaticText " "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText " "
 	StaticText "Defines the playstyle, and nature of progression for each preset."
 	StaticText " "
@@ -155,7 +148,7 @@ OptionMenu "SpawnPresets"
 	StaticText " "
 	Submenu " - Chaotic Random - ",		"ChaoticSpawnMenu"
 	StaticText " "
-	Submenu " - Brutal Doom - ",		"BrutalDoomSpawnMenu"
+	Submenu " - Vanilla Doom - ",		"VanillaDoomSpawnMenu"
 	
 }
 
@@ -163,7 +156,7 @@ OptionMenu "DefaultSpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Randomized Progression - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText "Balanced variety, with a mild Progression curve."
 	StaticText " Default recommended experience."
 }
@@ -171,15 +164,15 @@ OptionMenu "Tier1SpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tier 1 - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
-	StaticText "Similar to Brutal Doom."
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
+	StaticText "Similar to vanilla Doom."
 	StaticText "A few Zombie variants, no 'new' Weapons except Dual-Wielding."
 }
 OptionMenu "Tier2SpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tier 2 - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText "Nearly the same as Tier 1."
 	StaticText "Slightly higher power Weapons and Enemies."		//This is actually easier than T1 because of the extra weapons available and pretty much no harder enemy variants.
 }
@@ -187,7 +180,7 @@ OptionMenu "Tier3SpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tier 3 - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText "Medium level of variation."
 	StaticText "About half of what Project Brutality has to offer."
 }
@@ -195,7 +188,7 @@ OptionMenu "Tier4SpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tier 4 - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText "The 'end-game' preset."
 	StaticText "The fairest balance of all Weapons and Enemy types."
 }
@@ -203,7 +196,7 @@ OptionMenu "TieredProgressSpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Tiered Progression - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText "Fight through each Tier."
 	StaticText "Each tier is 6 levels long. (Splits at, 7, 13, and 21+)"
 
@@ -212,7 +205,7 @@ OptionMenu "DeathWishSpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - DeathWish - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText "Beyond the last Tier."
 	StaticText "Very difficult Enemies, but better gear available."
 }
@@ -220,7 +213,7 @@ OptionMenu "ChaoticSpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Chaotic Random - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText "Intensely Randomized."
 	StaticText "Equal weighting for all Monster and Enemy variants."
 }
@@ -228,7 +221,7 @@ OptionMenu "PistolStartSpawnMenu"
 {
 	Title "--------- Spawn Presets ---------"
 	StaticText " - Pistol Starts - "
-	Option "Spawn Preset: ", "BrutalSpawnBalance","BrutalDoomSpawnBalanceChoices"
+	Option "Spawn Preset: ", "BrutalSpawnBalance","PBSpawnChoices"
 	StaticText "Start from Scratch."
 	StaticText "Lose all weapons each level, but goodies are common. "
 }
@@ -330,17 +323,23 @@ OptionMenu "RenderingSettings"
 {
 	Title "---------Rendering Settings---------"
 	StaticText " "
-	Slider "Maximum Decal Amount", "cl_maxdecals", 0, 10000, 100
+	Submenu "Gore/Debris Settings", "GoreDebrisMenu"
 	StaticText " "
 	
-	Slider "Max Gibs & Blood", "sv_corpsequeuesize", 64, 64000, 64
+	Submenu "Motion Blur Settings", "MBlurOpts"
 	StaticText " "
 	
-	Submenu "Motion Blur", "MBlurOpts"
+	Submenu "Screen Tilt Settings", "TiltPlusPlusMenu"
 	StaticText " "
 	
-	Option "Disable Weapon Sway",				"disable_weaponsway", "OnOff"
-	StaticText "Disables weapon swaying when quickly looking around"
+	Submenu "Weapon Visual Settings", "WeaponVisuals"
+	StaticText " "
+	
+	Slider "Maximum Wall Decals", "cl_maxdecals", 0, 10000, 100
+	StaticText " "
+	
+	Option "Show dash screen effect","pb_dasheffect", "OnOff"
+	StaticText "Toggles the screen effect when performing a dash"
 	StaticText " "
 	
 	Option "Enable Performance Mode",				"performancemode", "OnOff"
@@ -359,17 +358,6 @@ OptionMenu "RenderingSettings"
 	StaticText "Disables the fade out effects when completing a map"
 	StaticText " "
 	
-	  Option "Blood Amount", "zdoombrutalblood", "BrutalBlood"
-	  StaticText "How much blood you want to see?"
-	  StaticText " "
-	  
-	  Option "Enable Blood/Gore Janitor", "zdoombrutaljanitor", "YesOrNo"
-	  StaticText "Makes blood, gore, and parts anatomy disappear after 30 seconds."
-	  StaticText " "
-	 
-	  Option "Enable Bullet Janitor", "zdoombrutaljanitorcasings", "YesOrNo"
-	  StaticText "Makes bullet casings & empty magazines disappear over time."
-	  StaticText " "
 }
 
 //Motion Blur Options by Pixel Eater
@@ -729,7 +717,7 @@ OptionMenu "SpawnSettings"
 	StaticText "Secret Weapons"
 }
 
-OptionValue "BrutalDoomSpawnBalanceChoices"
+OptionValue "PBSpawnChoices"
 {
 666, "Randomized Progression"
 667, "Tier 1"
@@ -740,7 +728,7 @@ OptionValue "BrutalDoomSpawnBalanceChoices"
 672, "DeathWish" //YE
 663, "Chaotic Random"
 //674, "Pistol Starts"
-675, "Brutal Doom"
+675, "Vanilla Doom"
 }
 
 OptionValue "HealthPackColor"
@@ -828,97 +816,45 @@ OptionValue "maxgibs"
 }
 
 
-
-
-
-//Z Movement
-AddOptionMenu "OptionsMenu"
-{
-	StaticText ""
-	Submenu "Project Brutality - ZMove Options", "ZMoveOptions"
-}
-
-OptionMenu "ZMoveOptions"
+OptionMenu "WeaponVisuals"
 {
 	Class "ZMoveMenu"
-	Title "Project Brutality - ZMove Options"
+	Title "Weapon Visual Options"
 	Position -32
 	
-	StaticText	""
-	StaticText	"Speed & Acceleration", 1
-	ZMoveOption	"Acceleration Type",					"Pick your acceleration type",															"sv_acceltype",				"AccelType"
-	ZMoveSlider	"Top Running Speed",					"Increase value to increase the top running speed",										"sv_uspeedmodifier",		0,		4,		0.1
-	ZMoveSlider "Top Hopping Speed", 					"Top Hopping Speed (u/s)",																"sv_topspeedlimiter",		20,		36,		1,		0
-	ZMoveSlider	"Walk Speed",							"How fast you move when walking (% of regular speed)",									"sv_walkspeed",				0.5,	1.0,	0.1
-	ZMoveSlider	"Crouch Speed",							"How fast you move when crouching (% of regular speed, never faster than Walk Speed)",	"sv_crouchspeed",			0.1,	1.0,	0.1
-	ZMoveSlider "Gravity", 								"Set Player Gravity",																	"sv_setgravity",			0.1,	1.5,	0.1,	2
-	StaticText	""
-	StaticText	"Dusk Acceleration", Orange
-	ZMoveSlider "Ground Strafing Bonus",				"Ground Straferunning speed boost",														"dsk_strafemodifier",		-10,	5,		1
-	ZMoveSlider "Strafejumping Acceleration", 			"How fast you gain speed when you strafejump",											"dsk_acceleration",			0,		10,		1
-	ZMoveSlider "Escape Speed",							"The minimum speed at which the user set speed bonus kicks in",							"dsk_escapespeed",			18,		26,		1
-	ZMoveSlider "High Speed Acceleration Bonus", 		"Acceleration Bonus for when you go faster than the escape speed",						"dsk_accelbonus",			1,		2,		0.1
-	StaticText	""
-	StaticText	"Painkiller Acceleration", Orange
-	ZMoveSlider "BHop Acceleration", 					"How fast you gain speed when bunnyhopping",											"pk_acceleration",			0.0,	2.0,	0.05,	2
-	StaticText	""
-	
-	StaticText	"Jumping", 1
-	ZMoveSlider "Jump Height", 							"Player Jump Height",																	"sv_jumpheight",			5,		8,		0.5
-	ZMoveSlider "BHop Jump Height (PK Only)", 			"Bunny Hop Jump Height (% of regular jump height)",										"pk_bhopjumpheight",		0.5,	1,		0.1,	2
-	ZMoveOption "Auto Jump", 							"When off you will not be able to jump a second time if you are holding the jump key",	"sv_autojump",				"OnOff"
-	StaticText	""
-	StaticText	"Double Jump", Orange
-	ZMoveOption "Double Jump Type", 					"Enable and choose Double Jumping style",												"sv_doublejump",			"DoubleJump"
-	ZMoveSlider "Double Jump Height", 					"Double Jump Height (% of regular jump height)",										"sv_doublejumpheight",		0.5,	1.5,	0.1
-	StaticText	""
-	StaticText	"Ramp Jumps", Orange
-	ZMoveOption "Ramp Jumps Enabled", 					"When on you will be able to perform ramp jumps",										"sv_rampjump",				"OnOff"
-	ZMoveSlider "Ramp Jumps Tic threshold", 			"The amount of jump tics after which ramp jumps are not possible to execute",			"sv_rjumptics",				1,		15,		1,		0
-	ZMoveSlider "Ramp Jumps Bonus Multiplier", 			"Multiplier of the ramp jump height bonus",												"sv_rjumpmultiplier",		1.0,	2.0,	0.05,	2
-	StaticText	""
-	StaticText	"Elevator Jumps", Orange
-	ZMoveOption "Elevator Jumps Enabled", 				"When on you can perform UT style elevator jumps",										"sv_elevatorjump",			"OnOff"
-	ZMoveSlider "Elevator Jumps Bonus Multiplier", 		"Multiplier of the elevator jump bonus",												"sv_ejumpmultiplier",		1.0,	2.0,	0.05,	2
-	StaticText	""
-	
-	StaticText	"Dashing", 1
-	ZMoveOption	"Dash Enabled",							"Enable Dashing",																		"sv_dashenable",			"OnOff"
-	Control		"Dash Bind",							"Dash"
-	ZMoveSlider "Dash Boost", 							"Set how fast you dash",																"sv_dashboost",				1.5,	2.5,	0.05,	2
-	ZMoveSlider "Dash Jump Height", 					"Set how high you jump when dashing (% of regular jump height)",						"sv_dashjump",				0.5,	1.0,	0.05,	2
-	ZMoveSlider "Dash Cooler", 							"How many game tics have to pass before you can execute a second dash",					"sv_dashcooler",			5,		18,		1,		0
-	StaticText	""
-	
-	StaticText	"CrouchSlide", 1
-	ZMoveOption "Crouch Slide", 						"Enable crouch sliding",																"sv_crouchslide",			"OnOff"
-	ZMoveSlider "Slide Speed Boost", 					"Set the initial crouch slide speed boost",												"sv_cslidestrength",		3.0,	4.0,	0.05,	2
-	ZMoveSlider "Slide Boost Fade", 					"How quickly the speed boost fades per game tic",										"sv_cslidefade",			0.1,	0.5,	0.05,	2
-	ZMoveSlider "Mid Air Slide Speed Penalty", 			"How quickly the speed boost fades away when continuing a slide in mid air",			"sv_cslideairpenalty",		0.5,	1.0,	0.05,	2
-	StaticText	""
-	StaticText	""
-	
-	Option "Disable Ledge Climbing",				"donotclimb", "OnOff"
-	StaticText "Disables ledge climbing feature"
-	StaticText " "
-	StaticText " "
+	StaticText	"Bobbing", 1
+	ZMoveSlider	"Walk/Run View Bobbing",				"Adjust view bobbing's intensity when moving",											"movebob",					0.0,	1.0,	0.1
+	ZMoveSlider	"Still View Bobbing",					"Adjust view bobbing's intensity when not moving",										"stillbob",					0.0,	1.0,	0.1
+	ZMoveSlider	"Walk/Run Weapon Bobbing",				"Adjust weapon bobbing's intensity when moving",										"wbobspeed",				0.0,	2.0,	0.1
+	ZMoveOption	"Still Weapon Bobbing",					"Turn on/off the weapon bobbing when standing still",									"zm_stillbob",				"OnOff"
+	ZMoveSlider	"Sprite speed to full bob",				"How fast weapon sprites transition to their maximum bobbing range",					"zm_fullbobspeed",			1,		15,		1,		0
+	StaticText 	""
+	StaticText	"Weapon Sway", Orange
+	ZMoveOption "Yaw Weapon Sway", 						"Allow weapons to sway according to your mouse yaw",									"zm_yawsway",				"OnOff"
+	ZMoveSlider "Yaw Sway Speed", 						"How fast weapons sway",																"zm_yawswayspeed",			0,		4,		0.5
+	ZMoveSlider "Yaw Sway Range", 						"Maximum Distance weapons can sway",													"zm_yawswayrange",			0,		8,		0.1
+	ZMoveSlider "Yaw Sway Friction", 					"How fast sprites will tend to realign to the center",									"zm_yawswayfriction",		5,		14,		0.5
+	ZMoveOption "Yaw Sway Direction", 					"Set wherever weapons sway in the direction you turn or the opposite",					"zm_yawswaydirection",		"SwayDirection"
+	StaticText 	""
+	StaticText	"Vertical Offset", Orange
+	ZMoveSlider "Offset Speed", 						"How fast weapons raise and fall depending on your vertical velocity",					"zm_offsetspeed",			50,		100,	1,		0
+	ZMoveSlider "Offset Range", 						"Maximum Height weapons can fall",														"zm_offsetmaxrange",		10,		50,		1,		0
+	ZMoveOption "Offset Direction", 					"Set Wherever the sprites are offset according to your vertical direction",				"zm_offsetdirection",		"OffsetDirection"
+	StaticText 	""
 	
 	StaticText	"Others", 1
-	ZMoveOption "Speedometer", 							"Enable SpeedOMeter",																	"cl_speedometer",			"OnOff"
+	ZMoveOption "Speedometer", 							"Enable SpeedOMeter",																	"zm_speedometer",			"Speedometer"
 	Control		"Reset to default values",				"zmove_reset"
 }
 
-OptionValue "AccelType"
-{
-	0, "Dusk"
-	1, "Painkiller"
-}
 
-OptionValue "DoubleJump"
+OptionValue "BobType"
 {
-	0, "Off"
-	1, "UT2004"
-	2, "Doom 4"
+	0, "Doom"
+	1, "Build Engine"
+	2, "Dusk"
+	3, "Painkiller"
+	4, "Unreal Tournament"
 }
 
 OptionValue "SwayDirection"
@@ -927,19 +863,23 @@ OptionValue "SwayDirection"
 	1, "Same Direction"
 }
 
-
-//NashGore's ZScript Gore System
-AddOptionMenu "OptionsMenu"
+OptionValue "OffsetDirection"
 {
-	StaticText ""
-	StaticText "Nash's Gore Mod: Vengeance Edition v1.0"
-	Submenu "$OPTMNU_NASHGORE", "NashGoreMenu"
+	0, "Opposite Direction"
+	1, "Same Direction"
 }
 
-OptionMenu "NashGoreMenu"
+OptionValue "Speedometer"
+{
+	0, "Off"
+	1, "Doom Units"
+	2, "Quake Units"
+}
+
+OptionMenu "GoreDebrisMenu"
 {
 	Class "NashGoreMenu"
-	Title "$NASHGOREMNU_TITLE"
+	Title "Gore/Debris Visual Options"
 	Position -32
 
 	StaticText ""
@@ -960,7 +900,8 @@ OptionMenu "NashGoreMenu"
 
 	StaticText "$NASHGOREMNU_MISC_TITLE", 1
 	SafeCommand "$NASHGOREMNU_MISC_CLEARGORENOW",			"netevent EV_ClearGore"
-	NashGoreSlider "$NASHGOREMNU_MISC_MAXGORE",				"$NASHGOREMNU_HELPTEXT_MISC_MAXGORE",		"nashgore_maxgore",		0, 500, 1, 0
+	NashGoreSlider "$NASHGOREMNU_MISC_MAXGORE",				"$NASHGOREMNU_HELPTEXT_MISC_MAXGORE",		"nashgore_maxgore",		0, 2000, 1, 0
+	NashGoreSlider "$NASHGOREMNU_MISC_MAXCASINGS",			"$NASHGOREMNU_HELPTEXT_MISC_MAXCASINGS",	"nashgore_maxcasings",	0, 2000, 1, 0
 	NashGoreOption "$NASHGOREMNU_MISC_CORPSEBLOOD",			"$NASHGOREMNU_HELPTEXT_MISC_CORPSEBLOOD",	"nashgore_corpseblood",	"OnOff"
 	NashGoreOption "$NASHGOREMNU_MISC_FOOTPRINTS",			"$NASHGOREMNU_HELPTEXT_MISC_FOOTPRINTS",	"nashgore_footprints",	"OnOff"
 	NashGoreOption "$NASHGOREMNU_MISC_DEATHFLIP",			"$NASHGOREMNU_HELPTEXT_MISC_DEATHFLIP",		"nashgore_deathflip",	"OnOff"

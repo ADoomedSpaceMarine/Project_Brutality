@@ -9,7 +9,7 @@ Actor MovingLeft: Inventory {inventory.maxamount 1}
 Actor MovingRight: Inventory {inventory.maxamount 1}
 Actor MovingBackward: Inventory {inventory.maxamount 1}
 
-Actor Chain_saw : PB_Weapon //replaces Chainsaw
+Actor Chain_saw : PB_Weapon replaces Chainsaw
 {
 	Weapon.BobRangeX 0.3
 	Weapon.BobRangeY 0.5
@@ -36,7 +36,12 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		Stop
 		
 		Select:
-		TNT1 A 0
+		TNT1 A 0 {
+			A_WeaponOffset(0,32);
+			A_SetRoll(0);
+			A_SetCrosshair(0);
+			A_TakeInventory("PB_LockScreenTilt",1);
+		}
 		TNT1 A 0 A_TakeInventory("RifleSelected",1)
 		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand")
 		TNT1 A 0 A_TakeInventory("CarbineSelected",1)
@@ -79,6 +84,12 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		Wait
 		
 	Deselect:
+		TNT1 A 0 {
+			A_WeaponOffset(0,32);
+			A_SetRoll(0);
+			A_SetCrosshair(0);
+			A_TakeInventory("PB_LockScreenTilt",1);
+		}
 		TNT1 A 0 A_TakeInventory("PowerBloodOnVisor",1)
 		TNT1 A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
 		TNT1 A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
@@ -132,7 +143,6 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAWG ABCDEFGFEDCB 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("PowerGreenBloodOnVisor") == 1) { return state("Ready.GreenBlood"); }
@@ -173,7 +183,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW2 ABCDEFGFEDCB 1  
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("PowerGreenBloodOnVisor") == 1) { return state("Ready.GreenBlood"); }
@@ -201,7 +211,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW3 ABCDEFGFEDCB 1  
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("PowerGreenBloodOnVisor") == 1) { return state("Ready.GreenBlood"); }
@@ -228,7 +238,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW4 ABCDEFGFEDCB 1  
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -248,7 +258,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 			{
 				A_WeaponOffset(0,32);
 				A_Takeinventory("GoWeaponSpecialAbility",1);
-				if (CountInv("SSG") == 1 && CountInv("NewShell") > 1) { return state("QuickShot"); }
+				if (CountInv("SSG") >= 1 && CountInv("NewShell") > 1) { return state("QuickShot"); }
 				A_Print("You need a loaded sawed-off shotgun!");
 				return state("");
 			}
@@ -317,6 +327,11 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		
 //Revamping the chainsaw's primary fire behavior: Directional Swings based on movement direction, like in KF2
 	Fire:
+		TNT1 A 0 {
+			A_WeaponOffset(0,32);
+			A_SetRoll(0);
+			A_SetCrosshair(0);
+		}
 		TNT1 A 0 A_GiveInventory("PB_LockScreenTilt",1)
 		TNT1 A 0
 			{
@@ -355,17 +370,17 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		CSA1 EFG 1
 			{
 				A_Saw("", "Machete/Yum", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 			}
 		CSA1 F 1 
 			{
 				A_Saw("", "Machete/Yum", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 			}
 		CSA1 EFG 1
 			{
 				A_Saw("", "Machete/Yum", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 			}
 		TNT1 A 0 A_playsound("weapons/chainsaw/loop", 7,0.7)
 		TNT1 A 0 A_ReFire("ClassicAttackCleanLoop")
@@ -375,7 +390,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAWG GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"), WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -411,7 +426,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAWG GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -449,7 +464,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAWG GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -485,7 +500,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAWG GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -523,7 +538,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAWG GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -559,7 +574,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAWG GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -601,7 +616,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAWG GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -639,17 +654,17 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 			CSA2 EFG 1
 			{
 				A_Saw("", "Machete/Yum", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 			}
 			CSA2 F 1 
 			{
 				A_Saw("", "Machete/Yum", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 			}
 			CSA2 EFG 1
 			{
 				A_Saw("", "Machete/Yum", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 			}
 		TNT1 A 0 A_playsound("weapons/chainsaw/loop", 7,0.7)
 		TNT1 A 0 A_ReFire("ClassicAttackRedLoop")
@@ -659,7 +674,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW2 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -694,7 +709,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW2 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_INTERPOLATE);
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -731,7 +746,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW2 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -766,7 +781,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW2 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -779,13 +794,18 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 				return state("");
 			}
 		Goto ready.blood
+	
+	SawBloodSprayRed:
+		SBB1 ABCD 1
+		Stop
 		
 	LeftAttackRed:
 		TNT1 A 0 A_PlaySound("sawswing", CHAN_WEAPON, 0.5)
 		TNT1 A 0 
 		C5S2 ABCDE 1 A_SetRoll(roll-0.2,SPF_INTERPOLATE)
-		Goto LeftAttackRedContinue+3
+		Goto LeftAttackRedContinue+4
 	LeftAttackRedContinue:
+		TNT1 A 0 A_Gunflash("SawBloodSprayRed")
 		C5S2 LM 1 
 		C5S2 N 1 A_Saw("", "Machete/Yum", 8, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120)
 		TNT1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"LeftAttackGreenContinue")
@@ -803,7 +823,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW2 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -819,8 +839,9 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 	LeftAttackRed2:
 		TNT1 A 0 A_PlaySound("sawswing2", CHAN_WEAPON, 1)
 		C5S2 KJHGF 1  A_SetRoll(roll+0.2,SPF_INTERPOLATE)
-		Goto LeftAttackRed2Continue+3
+		Goto LeftAttackRed2Continue+4
 	LeftAttackRed2Continue:
+		TNT1 A 0 A_Gunflash("SawBloodSprayRed")
 		C5S2 ML 1 
 		C5S2 N 1 A_Saw("", "Machete/Yum", 8, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120)
 		TNT1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"LeftAttackGreen2Continue")
@@ -838,7 +859,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW2 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -879,7 +900,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW2 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -915,17 +936,17 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 			CSA3 EFG 1
 			{
 				A_Saw("", "Machete/Yum", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 			}
 			CSA3 F 1 
 			{
 				A_Saw("", "Machete/Yum", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 			}
 			CSA3 EFG 1
 			{
 				A_Saw("", "Machete/Yum", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 			}
 		TNT1 A 0 A_playsound("weapons/chainsaw/loop", 7,0.7)
 		TNT1 A 0 A_ReFire("ClassicAttackBlueLoop")
@@ -936,7 +957,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW3 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -970,7 +991,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW3 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1006,7 +1027,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW3 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1040,7 +1061,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW3 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1076,7 +1097,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW3 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1110,7 +1131,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW3 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1150,7 +1171,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW3 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1185,17 +1206,17 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 			CSA4 EFG 1
 			{
 				A_Saw("", "Machete/Yum", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 			}
 			CSA4 F 1 
 			{
 				A_Saw("", "Machete/Yum", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 			}
 			CSA4 EFG 1
 			{
 				A_Saw("", "Machete/Yum", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 120, 32);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 			}
 		TNT1 A 0 A_playsound("weapons/chainsaw/loop", 7,0.7)
 		TNT1 A 0 A_ReFire("ClassicAttackGreenLoop")
@@ -1205,7 +1226,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW4 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1238,7 +1259,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW4 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1273,7 +1294,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW4 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1306,7 +1327,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW4 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1343,7 +1364,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		Goto ready.GreenBlood
 	LeftAttackGreen2:
 		TNT1 A 0 A_PlaySound("sawswing2", CHAN_WEAPON, 1)
-		C5S3 KJHGF 1  A_SetRoll(roll+0.2,SPF_INTERPOLATE)
+		C5S4 KJHGF 1  A_SetRoll(roll+0.2,SPF_INTERPOLATE)
 		Goto LeftAttackGreen2Continue+3
 	LeftAttackGreen2Continue:
 		C5S4 ML 1 
@@ -1361,7 +1382,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW4 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1401,7 +1422,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		SAW4 GHGHGHGGHHGGHH 1 
 			{
 				A_WeaponReady;
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1533,6 +1554,11 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 
 
 	AltFire:
+		TNT1 A 0 {
+			A_WeaponOffset(0,32);
+			A_SetRoll(0);
+			A_SetCrosshair(0);
+		}
 		TNT1 A 0 A_GiveInventory("PB_LockScreenTilt",1)
 		TNT1 A 0 A_Giveinventory("HasCutingWeapon",1)
 		TNT1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"AltFire.Green")
@@ -1657,7 +1683,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		C4S1 RSTU 1 
 			{
 				A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1716,7 +1742,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		C4S2 RSTU 1 
 			{
 				A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1775,7 +1801,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		C4S3 RSTU 1
 			{
 				A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1834,7 +1860,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		C4S4 RSTU 1 
 			{
 				A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1849,7 +1875,10 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		Goto Ready.GreenBlood
 
 	ComboKick1:
-		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsHide")
+		TNT1 A 0 {
+			A_Overlay(-10, "FirstPersonLegsHide");
+			A_OverlayFlags(1,PSPF_PLAYERTRANSLATED, true);
+		}
 		TNT1 A 0 A_Recoil(-5)
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
 		TNT1 A 0 A_playsound("weapons/chainsaw/idle", 5)
@@ -1874,10 +1903,11 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 			A_SetPitch(-0.5 + pitch,SPF_INTERPOLATE);
 		}
 		TNT1 A 0 A_TakeInventory("Kicking", 1)
+		TNT1 A 0 A_OverlayFlags (1,PSPF_PLAYERTRANSLATED, false)
 		TNT1 AAA 1 
 			{
 				A_WeaponReady(WRF_NOBOB|WRF_NOSWITCH|WRF_NOPRIMARY);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1892,7 +1922,10 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		Goto OnLoop
 		
 	ComboKick2:
-		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsHide")
+		TNT1 A 0 {
+			A_Overlay(-10, "FirstPersonLegsHide");
+			A_OverlayFlags(1,PSPF_PLAYERTRANSLATED, true);
+		}
 		TNT1 A 0 A_Recoil(-5)
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
 		TNT1 A 0 A_playsound("weapons/chainsaw/idle", 5)
@@ -1914,10 +1947,11 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		KIC3 IJKLM 1 A_SetRoll(roll-2)
 		KIC3 NOPQR 1 A_SetRoll(roll+1,SPF_INTERPOLATE)
 		TNT1 A 0 A_TakeInventory("Kicking", 1)
+		TNT1 A 0 A_OverlayFlags(1,PSPF_PLAYERTRANSLATED, false)
 		TNT1 AAA 1 
 			{
 				A_WeaponReady(WRF_NOBOB|WRF_NOSWITCH);
-				A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+				
 				if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 				if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 				if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -1970,7 +2004,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		C9S1 QR 1 
 		{
 			A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-			A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+			
 			if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 			if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 			if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -2019,11 +2053,10 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 
 		C9S2 IJK 1
 		C9S2 LMN 1 A_SetRoll(roll-1,SPF_INTERPOLATE)
-		C9S2 OP 1
-		C9S2 QR 1 A_DoPBWeaponAction(WRF_NOFIRE|WRF_NOSWITCH)
-		/*{
+		C9S2 OPQR 1
+		{
 			A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-			A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+			
 			if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 			if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 			if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -2034,7 +2067,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 			if (CountInv("Taunting") == 1) { return state("Taunt"); }
 			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return state("Salute"); }
 			return state("");
-		}*/
+		}
 		Goto Ready.Blood
 
 	SlashUp.Blue:
@@ -2076,7 +2109,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		C9S3 QR 1 
 		{
 			A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-			A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+			
 			if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 			if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 			if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
@@ -2129,7 +2162,7 @@ Actor Chain_saw : PB_Weapon //replaces Chainsaw
 		C9S4 QR 1 
 		{
 			A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
-			A_WeaponOffset(-CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"));
+			
 			if (CountInv("DoPunch") == 1) { return state("QuickPunch"); }
 			if (CountInv("Grabbing_A_Ledge") == 1) { return state("LedgeClimb"); }
 			if (CountInv("GoWeaponSpecialAbility") == 1) { return state("WeaponSpecial"); }
